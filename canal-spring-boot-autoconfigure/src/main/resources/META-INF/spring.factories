@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.harveychan.canal.client.springboot.autoconfigure.SimpleClientAutoConfiguration,\
+cn.harveychan.canal.client.springboot.autoconfigure.ClusterClientAutoConfiguration,\
+cn.harveychan.canal.client.springboot.autoconfigure.ZookeeperClientAutoConfiguration,\
+cn.harveychan.canal.client.springboot.autoconfigure.KafkaClientAutoConfiguration

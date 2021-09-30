@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7.35
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_ROOT_HOST=%"
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - ./mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./mysql/init/:/docker-entrypoint-initdb.d/
+    networks:
+      - example
+  canal-server:
+    image: canal/canal-server:v1.1.4
+    container_name: canal-server
+    depends_on:
+      - mysql
+    ports:
+      - 11111:11111
+    environment:
+      - canal.instance.mysql.slaveId=54321
+      - canal.destinations=example
+      - canal.instance.master.address=mysql:3306
+      - canal.instance.dbUsername=canal
+      - canal.instance.dbPassword=canal
+      - canal.instance.filter.regex=test.t_user
+    networks:
+      - example
+networks:
+  example:
+    driver: bridge
